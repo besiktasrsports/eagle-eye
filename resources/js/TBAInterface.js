@@ -1,7 +1,15 @@
 // TBAInterface funcitons to pull data from TheBlueAlliance.com
-var teams = null;
-var schedule = null;
+var teams = JSON.parse(window.localStorage.getItem("teams"));
+var schedule = JSON.parse(window.localStorage.getItem("teams"));
 var authKey = "uTHeEfPigDp9huQCpLNkWK7FBQIb01Qrzvt4MAjh9z2WQDkrsvNE77ch6bOPvPb6";
+
+
+let updateTBADataFromLocalStorage = () => {
+	teams = JSON.parse(window.localStorage.getItem("teams"));
+	schedule = JSON.parse(window.localStorage.getItem("schedule"));
+}
+
+
 /**
  * Get list of teams in event
  *
@@ -16,7 +24,8 @@ function getTeams(eventCode) {
 		xmlhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
 				var response = this.responseText;
-				teams = JSON.parse(response);
+				window.localStorage.setItem("teams", response);
+				updateTBADataFromLocalStorage();
 			}
 		};
 		// Send request
@@ -38,7 +47,8 @@ function getSchedule(eventCode) {
 		xmlhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
 				var response = this.responseText;
-				schedule = JSON.parse(response);
+				window.localStorage.setItem("schedule", response);
+				updateTBADataFromLocalStorage();
 			}
 		};
 		// Send request

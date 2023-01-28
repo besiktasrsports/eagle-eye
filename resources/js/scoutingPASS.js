@@ -3,6 +3,15 @@
 // The guts of the ScountingPASS application
 // Written by Team 2451 - PWNAGE
 
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker
+      .register("/serviceWorker.js")
+      .then(res => console.log("service worker registered"))
+      .catch(err => console.log("service worker not registered", err))
+  })
+}
+
 document.addEventListener("touchstart", startTouch, false);
 document.addEventListener("touchend", moveTouch, false);
 
@@ -262,6 +271,8 @@ function addClickableImage(table, idx, name, data) {
   cell.setAttribute("colspan", 2);
   cell.setAttribute("style", "text-align: center;");
   var canvas = document.createElement('canvas');
+  canvas.width = screen.width * 0.9;
+  canvas.height = canvas.width / 2;
   //canvas.onclick = onFieldClick;
   canvas.setAttribute("onclick", "onFieldClick(event)");
   canvas.setAttribute("class", "field-image-src");
@@ -1078,6 +1089,8 @@ function drawFields(name) {
   for (f of fields) {
     code = f.id.substring(7);
     var img = document.getElementById("img_" + code);
+    f.width = screen.width * .9;
+    f.height = f.width * img.naturalHeight / img.naturalWidth;
     var shape = document.getElementById("shape_" + code);
     let shapeArr = shape.value.split(' ');
     var ctx = f.getContext("2d");
@@ -1416,7 +1429,12 @@ window.onload = function () {
     var ec = document.getElementById("input_e").value;
     getTeams(ec);
     getSchedule(ec);
+    updateTBADataFromLocalStorage();
     this.drawFields();
+    document.querySelector("#prematchHeader1").addEventListener("click", function () {
+      window.location = `${window.location.href.slice(0, 47)}#newLoad${Math.floor(Math.random() * 9999)}`;
+      window.location.reload();
+    });
     if (enableGoogleSheets) {
       console.log("Enabling Google Sheets.");
       setUpGoogleSheets();

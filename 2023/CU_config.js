@@ -1,7 +1,7 @@
 var config_data = `
 {
-  "title": "Scouting PASS 2023",
-  "page_title": "Charged Up",
+  "title": "Eagle Eye 2023",
+  "page_title": "Eagle Eye",
   "checkboxAs": "10",
   "prematch": [
     { "name": "Scouter Initials",
@@ -60,7 +60,7 @@ var config_data = `
       "type": "clickable_image",
       "filename": "2023/field_image.png",
       "clickRestriction": "one",
-      "shape": "circle 5 black red true"
+      "shape": "circle 12 black red true"
     }
   ],
   "auton": [
